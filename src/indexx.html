@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KITT</title>
+
+    <style>
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: black;
+        }
+
+        .line-1{
+            height: 1px;
+            max-width: 530px;
+            background: white;
+            position: relative;
+            top: 270px;
+            left: 410px;
+        }
+
+        .line-2{
+            height: 1px;
+            max-width: 530px;
+            background: white;
+            position: relative;
+            top: 335px;
+            left: 410px;
+        }
+
+        #light-panel {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+
+            width: fit-content;
+            height: fit-content;
+        }
+
+        #light-panel .light {
+            width: 70px;
+            height: 30px;
+            border: 0.5px solid gray;
+            display: inline-block;
+        }
+
+
+        #btn-panel{
+            position: relative;
+           // border: 2px solid white;
+            background: black;
+            color: white;
+            font-size: 25px;
+            padding: 10px 20px;
+            margin: 10px;
+            top: 400px;
+            left: 600px;
+            height: 70px;
+        }
+
+
+    </style>
+
+</head>
+<body>
+
+<div class="line-1"></div>
+<div class="line-2"></div>
+
+<section id="light-panel">
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+    <div class="light"></div>
+
+
+</section>
+
+<section id="btn-panel">
+    <button id="start" type="button" >start</button>
+    <button id="stop" type="button">stop</button>
+</section>
+
+<audio id="audio" src="asssets/Knight%20Rider%20Sms%20!%20Knight%20Rider%20!%20Theme.mp3"></audio>
+
+<script src="asssets/jquery-3.6.4.min%20(1).js"></script>
+
+<script>
+    var lightNumber = 1;
+    var direction = "RIGHT";
+    var intervalLID ;
+
+    var Lights=$('.light');
+    console.log(Lights);
+//    Lights[3].style.background = 'red';
+
+    function updateLights(){
+        $('.light').css({background: 'white'});
+        Lights[lightNumber].style.background = 'red';
+        if (lightNumber > 0) {
+            Lights[lightNumber - 1].style.background = 'pink';
+        }
+        if ( lightNumber < 6 ) {
+            Lights[lightNumber + 1].style.background = 'pink';
+        }
+        if (lightNumber === 6){
+            direction = 'LEFT';
+        }
+        if (lightNumber === 0){
+            direction = 'RIGHT';
+        }
+        if (direction === 'RIGHT'){
+            lightNumber++;
+        }else {
+            lightNumber--;
+        }
+    }
+
+    $('#start').on('click' , () => {
+        $('#audio')[0].play();
+       intervalLID = setInterval(updateLights, 100);
+    })
+
+    $('#stop').on('click' , () => {
+        $('#audio')[0].pause();
+       clearInterval(intervalLID);
+    })
+
+</script>
+
+</body>
+</html>
